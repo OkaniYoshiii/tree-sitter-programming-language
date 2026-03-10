@@ -1,0 +1,21 @@
+============
+Unions
+============
+
+union Result {
+    One string,
+    Two i32,
+}
+
+---
+
+(source_file
+    (union_definition
+        (union_keyword)
+        (identifier)
+        (struct_field
+            (identifier)
+            (type))
+        (struct_field
+            (identifier)
+            (type))))

@@ -17,6 +17,7 @@ export default grammar({
       repeat(
         choice(
           $.function_definition,
+          $.union_definition,
           $.var_statement,
           $.const_statement,
           $._new_line,
@@ -29,20 +30,9 @@ export default grammar({
     var_keyword: ($) => token(prec(1, "var")),
     const_keyword: ($) => token(prec(1, "const")),
     function_definition: ($) =>
-      seq(
-        $.fn_keyword,
-        " ",
-        $.identifier,
-        "(",
-        optional($.parameters),
-        ") ",
-        $.type,
-        " ",
-        $.block,
-        "\n",
-      ),
+      seq($.fn_keyword, " ", $.identifier, "(", optional($.parameters), ") ", $.type, " ", $.block, $._new_line),
     expression: ($) => "TODO",
-    identifier: ($) => /[a-z]+/,
+    identifier: ($) => /[a-zA-Z]+/,
     constant: ($) => choice($.int, $.string),
     int: ($) => /\d+/,
     string: ($) => /"(.*?)"/,
@@ -50,32 +40,19 @@ export default grammar({
     parameters: ($) => seq(repeat(seq($.parameter, ", ")), $.parameter),
     type: ($) => choice("i32", "f32", "string"),
     block: ($) =>
-      seq(
-        "{",
-        $._new_line,
-        repeat(seq(optional($._indentation), $.statement)),
-        "}",
-      ),
-
+      seq("{", $._new_line, repeat(seq(optional($._indentation), $.statement)), "}"),
     statement: ($) => seq(choice($.return_statement), $._new_line),
     const_statement: ($) =>
-      seq(
-        $.const_keyword,
-        " ",
-        $.identifier,
-        " = ",
-        choice($.identifier, $.expression, $.constant),
-        $._new_line,
-      ),
+      seq($.const_keyword, " ", $.identifier, " = ", choice($.identifier, $.expression, $.constant), $._new_line),
     var_statement: ($) =>
-      seq(
-        $.var_keyword,
-        " ",
-        $.identifier,
-        " = ",
-        choice($.identifier, $.expression, $.constant),
-        $._new_line,
-      ),
+      seq($.var_keyword, " ", $.identifier, " = ", choice($.identifier, $.expression, $.constant), $._new_line),
+    union_keyword: ($) => "union",
+    union_definition: ($) =>
+      seq($.union_keyword, " ", $.identifier, " {", $._new_line, repeat($.struct_field), "}"),
+    struct_fields: ($) =>
+      seq($.struct_field),
+    struct_field: ($) =>
+      seq(repeat($._indentation), $.identifier, repeat(" "), $.type, ',', $._new_line),
     return_statement: ($) =>
       seq($.return_keyword, " ", optional(choice($.identifier, $.constant))),
   },

@@ -166,6 +166,10 @@
           "named": true
         },
         {
+          "type": "union_definition",
+          "named": true
+        },
+        {
           "type": "var_statement",
           "named": true
         }
@@ -188,9 +192,51 @@
     }
   },
   {
+    "type": "struct_field",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "type",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "type",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "union_definition",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "struct_field",
+          "named": true
+        },
+        {
+          "type": "union_keyword",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "var_statement",
@@ -240,11 +286,19 @@
     "named": false
   },
   {
+    "type": " {",
+    "named": false
+  },
+  {
     "type": "(",
     "named": false
   },
   {
     "type": ") ",
+    "named": false
+  },
+  {
+    "type": ",",
     "named": false
   },
   {
@@ -289,6 +343,10 @@
   },
   {
     "type": "string",
+    "named": true
+  },
+  {
+    "type": "union_keyword",
     "named": true
   },
   {
