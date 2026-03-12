@@ -12,6 +12,17 @@ export default grammar({
 
   extras: ($) => [],
 
+  reserved: {
+    global: $ => [
+      'fn', 'return', 'if', 'package',
+      'struct', 'var', 'const', 'union',
+    ]
+  },
+
+  conflicts: $ => [
+    [$._boolean_expression, $.constant],
+  ],
+
   rules: {
     source_file: ($) =>
       repeat(
@@ -22,31 +33,45 @@ export default grammar({
           $.package_definition,
           $.var_statement,
           $.const_statement,
+          $.if_statement,
           $._new_line,
         ),
       ),
 
     // MAIN LANGUAGE CONSTRUCTS
     statement: ($) =>
-      choice($.var_statement, $.const_statement, $.return_statement),
+      choice($.var_statement, $.const_statement, $.return_statement, $.if_statement),
     block: ($) =>
       seq("{", $._new_line, repeat(seq(optional($._indentation), $.statement)), "}"),
     type: ($) => choice("i32", "f32", "string"),
     identifier: ($) => /[a-zA-Z]+/,
-    expression: ($) => "TODO",
+    expression: ($) => choice($._boolean_expression),
 
     // LITTERALS
     string: ($) => /"(.*?)"/,
     int: ($) => /\d+/,
+    true: ($) => 'true',
+    false: ($) => 'false',
 
     // KEYWORDS
-    fn_keyword: ($) => token(prec(1, "fn")),
-    return_keyword: ($) => token(prec(1, "return")),
-    var_keyword: ($) => token(prec(1, "var")),
-    const_keyword: ($) => token(prec(1, "const")),
-    union_keyword: ($) => token(prec(1, "union")),
-    struct_keyword: ($) => token(prec(1, "struct")),
-    package_keyword: ($) => token(prec(1, "package")),
+    fn_keyword: ($) => "fn",
+    return_keyword: ($) => "return",
+    var_keyword: ($) => "var",
+    const_keyword: ($) => "const",
+    union_keyword: ($) => "union",
+    struct_keyword: ($) => "struct",
+    package_keyword: ($) => "package",
+    if_keyword: ($) => "if",
+    else_keyword: ($) => "else",
+
+    // OPERATORS
+    _comparison_operator: ($) =>
+      choice($.greater_than_operator, $.less_than_operator, $.greater_or_equal_than_operator, $.less_or_equal_than_operator, $.equality_operator),
+    greater_or_equal_than_operator: ($) => ">=",
+    less_or_equal_than_operator: ($) => "<=",
+    greater_than_operator: ($) => ">",
+    less_than_operator: ($) => "<",
+    equality_operator: ($) => "==",
 
     // DEFINTIONS
     function_definition: ($) =>
@@ -58,6 +83,18 @@ export default grammar({
     package_definition: ($) =>
       seq($.package_keyword, " ", $.identifier),
 
+    // EXPRESSIONS
+    _boolean_expression: ($) =>
+      choice(
+        $.true,
+        $.false,
+        $._comparison_expression,
+      ),
+    _comparison_expression: ($) =>
+      seq($._simple_expression, ' ', $._comparison_operator, ' ', $._simple_expression),
+    _simple_expression: ($) =>
+      choice($.identifier, $.constant),
+
     // STATEMENTS
     const_statement: ($) =>
       seq($.const_keyword, " ", $.identifier, " = ", choice($.identifier, $.expression, $.constant), $._new_line),
@@ -65,9 +102,11 @@ export default grammar({
       seq($.var_keyword, " ", $.identifier, " = ", choice($.identifier, $.expression, $.constant), $._new_line),
     return_statement: ($) =>
       seq($.return_keyword, " ", optional(choice($.identifier, $.constant)), $._new_line),
+    if_statement: ($) =>
+      seq($.if_keyword, ' ', field('condition', $.expression), ' ', $.block, $._new_line),
 
     // OTHERS
-    constant: ($) => choice($.int, $.string),
+    constant: ($) => choice($.int, $.string, $.true, $.false),
     parameter: ($) => seq($.identifier, " ", $.type),
     parameters: ($) => seq(repeat(seq($.parameter, ", ")), $.parameter),
     struct_fields: ($) =>

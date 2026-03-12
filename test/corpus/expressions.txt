@@ -1,0 +1,66 @@
+===================
+Boolean Expressions
+===================
+
+var a = 1 == 1
+var a = 1 <= 1
+var a = 1 >= 1
+var a = 1 < 1
+var a = 1 > 1
+var a = a == a
+
+---
+
+(source_file
+    (var_statement
+        (var_keyword)
+        (identifier)
+        (expression
+            (constant
+                (int))
+            (equality_operator)
+            (constant
+                (int))))
+    (var_statement
+        (var_keyword)
+        (identifier)
+        (expression
+            (constant
+                (int))
+            (less_or_equal_than_operator)
+            (constant
+                (int))))
+    (var_statement
+        (var_keyword)
+        (identifier)
+        (expression
+            (constant
+                (int))
+            (greater_or_equal_than_operator)
+            (constant
+                (int))))
+    (var_statement
+        (var_keyword)
+        (identifier)
+        (expression
+            (constant
+                (int))
+            (less_than_operator)
+            (constant
+                (int))))
+    (var_statement
+        (var_keyword)
+        (identifier)
+        (expression
+            (constant
+                (int))
+            (greater_than_operator)
+            (constant
+                (int))))
+    (var_statement
+        (var_keyword)
+        (identifier)
+        (expression
+            (identifier)
+            (equality_operator)
+            (identifier))))

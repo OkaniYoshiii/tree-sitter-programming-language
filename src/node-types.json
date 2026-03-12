@@ -50,11 +50,66 @@
       "required": true,
       "types": [
         {
+          "type": "false",
+          "named": true
+        },
+        {
           "type": "int",
           "named": true
         },
         {
           "type": "string",
+          "named": true
+        },
+        {
+          "type": "true",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "expression",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "constant",
+          "named": true
+        },
+        {
+          "type": "equality_operator",
+          "named": true
+        },
+        {
+          "type": "false",
+          "named": true
+        },
+        {
+          "type": "greater_or_equal_than_operator",
+          "named": true
+        },
+        {
+          "type": "greater_than_operator",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "less_or_equal_than_operator",
+          "named": true
+        },
+        {
+          "type": "less_than_operator",
+          "named": true
+        },
+        {
+          "type": "true",
           "named": true
         }
       ]
@@ -86,6 +141,36 @@
         },
         {
           "type": "type",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "if_statement",
+    "named": true,
+    "fields": {
+      "condition": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "block",
+          "named": true
+        },
+        {
+          "type": "if_keyword",
           "named": true
         }
       ]
@@ -185,6 +270,10 @@
           "named": true
         },
         {
+          "type": "if_statement",
+          "named": true
+        },
+        {
           "type": "package_definition",
           "named": true
         },
@@ -213,6 +302,10 @@
       "types": [
         {
           "type": "const_statement",
+          "named": true
+        },
+        {
+          "type": "if_statement",
           "named": true
         },
         {
@@ -368,7 +461,7 @@
     "named": true
   },
   {
-    "type": "expression",
+    "type": "equality_operator",
     "named": true
   },
   {
@@ -376,7 +469,19 @@
     "named": false
   },
   {
+    "type": "false",
+    "named": true
+  },
+  {
     "type": "fn_keyword",
+    "named": true
+  },
+  {
+    "type": "greater_or_equal_than_operator",
+    "named": true
+  },
+  {
+    "type": "greater_than_operator",
     "named": true
   },
   {
@@ -388,7 +493,19 @@
     "named": true
   },
   {
+    "type": "if_keyword",
+    "named": true
+  },
+  {
     "type": "int",
+    "named": true
+  },
+  {
+    "type": "less_or_equal_than_operator",
+    "named": true
+  },
+  {
+    "type": "less_than_operator",
     "named": true
   },
   {
@@ -409,6 +526,10 @@
   },
   {
     "type": "struct_keyword",
+    "named": true
+  },
+  {
+    "type": "true",
     "named": true
   },
   {
