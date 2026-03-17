@@ -6,7 +6,9 @@
       "camelcase": "pl",
       "title": "Programming Language",
       "scope": "source.pl",
-      "file-types": ["pl"],
+      "file-types": [
+        "pl"
+      ],
       "highlights": "queries/highlights.scm",
       "injection-regex": "^pl$",
       "class-name": "TreeSitterPl"
@@ -28,21 +30,12 @@
   },
   "bindings": {
     "c": false,
-    "go": false,
+    "go": true,
     "java": false,
     "node": false,
     "python": false,
     "rust": false,
     "swift": false,
     "zig": false
-  },
-  "theme": {
-    "keyword": "purple",
-    "identifier": "red",
-    "type": {
-      "italic": true,
-      "color": "#2f2bfb"
-    },
-    "string": "orange"
   }
 }
