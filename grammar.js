@@ -27,11 +27,14 @@ export default grammar({
 
   rules: {
     source_file: ($) =>
-      repeat(
-        choice(
-          seq($._statement, $._terminator),
-          seq($._definition, $._terminator),
+      seq(
+        repeat(
+          choice(
+            seq($._statement, $._terminator),
+            seq($._definition, $._terminator),
+          ),
         ),
+        optional(choice($._statement, $._definition)),
       ),
 
     _definition: ($) => choice(
